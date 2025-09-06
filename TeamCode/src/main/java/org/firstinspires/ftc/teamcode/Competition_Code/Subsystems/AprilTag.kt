@@ -102,5 +102,24 @@ class AprilTag(hardwareMap: HardwareMap) : Camera {
             }
         }
     }
+    fun getMotif(): Int {
+        visionPortal.resumeStreaming()
+        visionPortal.resumeLiveView()
+        val currentDetections = (visionProcessor as AprilTagProcessor).detections
 
+        var motif: Int = 0
+
+        for (detection in currentDetections) {
+            if (detection.id == 21) {
+                motif = 1
+            }
+            if (detection.id == 22) {
+                motif = 2
+            }
+            if (detection.id == 23) {
+                motif = 3
+            }
+        }
+        return motif
+    }
 }
