@@ -25,18 +25,28 @@ public class Actions {
     //apriltag will dictate the motif number
     public int motif;
 
+    //TODO() Need to make motor subsystem, find Servo values, and get a color sensor to check purple/green. Also make tests
 
 
     public void update() {
         aprilTag.update();
         sorter.update();
-        //intake.update;
+        //intake.update();
+        //launch.update():
+        greenLaunch.update();
+        purpleLaunch.update();
     }
 
 
 
     public Actions(HardwareMap hardwareMap) {
-
+        aprilTag = new AprilTag(hardwareMap);
+        sorterColor = new ColorSensors(hardwareMap);
+        sorter = new Servo(hardwareMap);
+        purpleLaunch = new Servo(hardwareMap);
+        greenLaunch = new Servo(hardwareMap);
+        // launch = new Motor(hardwareMap);
+        // intake = new Motor(hardwareMap);
     }
 
     public Action CheckMotif = new Action() {
@@ -44,15 +54,6 @@ public class Actions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             motif = aprilTag.getMotif();
             return motif == 0;
-        }
-    };
-
-    public Action Reset = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            sorter.state = Servo.State.HOLD;
-            //intake.state = Motor.State.Stop
-            return false;
         }
     };
 
@@ -65,6 +66,7 @@ public class Actions {
             if(sorterColor.checkForRecognition()){
                 return false;
                 //intake.state = Motor.State.Stop
+
             }
             else return true;
 
@@ -76,10 +78,12 @@ public class Actions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             /*if(sorterColor.color == purple){
                 sorter.state = Servo.State.PURPLE;
+
                 return false;
             }
             else if (sorterColor.color == green) {
                 sorter.state = Servo.State.GREEN;
+
                 return false;
             }
             else return true;
@@ -90,12 +94,16 @@ public class Actions {
         }
     };
 
-    public SequentialAction SortBall = new SequentialAction(Intake, Sort, Reset);
+    public SequentialAction SortBall = new SequentialAction(Intake, Sort);
 
     public Action ShootGreen = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            //stuff
+            //launch.state = Motor.State.Launch
+            greenLaunch.state= Servo.State.LAUNCHG;
+            //wait for ball to go out
+            greenLaunch.state= Servo.State.HOLDG;
+            //launch.state = Motor.State.Stop
             return false;
         }
     };
@@ -103,16 +111,20 @@ public class Actions {
     public Action ShootPurple = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            //stuff
+            //launch.state = Motor.State.Launch
+            purpleLaunch.state= Servo.State.LAUNCHP;
+            //wait for ball to go out
+            purpleLaunch.state= Servo.State.HOLDP;
+            //launch.state = Motor.State.Stop
             return false;
         }
     };
 
-    public SequentialAction ShootMotif1 = new SequentialAction(ShootGreen, ShootPurple, ShootPurple, Reset);
+    public SequentialAction ShootMotif1 = new SequentialAction(ShootGreen, ShootPurple, ShootPurple);
 
-    public SequentialAction ShootMotif2 = new SequentialAction(ShootPurple, ShootGreen, ShootPurple, Reset);
+    public SequentialAction ShootMotif2 = new SequentialAction(ShootPurple, ShootGreen, ShootPurple);
 
-    public SequentialAction ShootMotif3 = new SequentialAction(ShootPurple, ShootPurple, ShootGreen, Reset);
+    public SequentialAction ShootMotif3 = new SequentialAction(ShootPurple, ShootPurple, ShootGreen);
 
     public Action Endgame = new Action() {
         @Override
