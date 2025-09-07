@@ -13,7 +13,7 @@ public class Servo {
     }
 
     public void update(){
-        servo.setPosition(clawState.servoPos);
+        servo.setPosition(state.servoPos);
     }
 
     public enum State {

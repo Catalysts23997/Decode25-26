@@ -10,23 +10,26 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.AprilTag;
 import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.ColorSensors;
-import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.LinearSlide;
-import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.RotaryMotor;
 import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.Servo;
 
 public class Actions {
     AprilTag aprilTag;
     ColorSensors sorterColor;
-    Servo sorterServo;
+    Servo sorter;
+    Servo purpleLaunch;
+    Servo greenLaunch;
 
+    // Motor launch;
     // Motor intake;
-    int motif;
+
+    //apriltag will dictate the motif number
+    public int motif;
 
 
 
     public void update() {
         aprilTag.update();
-        sorterServo.update();
+        sorter.update();
         //intake.update;
     }
 
@@ -47,8 +50,8 @@ public class Actions {
     public Action Reset = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            sorterServo.state = Servo.State.HOLD;
-            //intake.state = Motor.Stae.Stop
+            sorter.state = Servo.State.HOLD;
+            //intake.state = Motor.State.Stop
             return false;
         }
     };
@@ -57,11 +60,11 @@ public class Actions {
     public Action Intake = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            sorterServo.state = Servo.State.HOLD;
-            //intake.state = Motor.Stae.Intake
+            sorter.state = Servo.State.HOLD;
+            //intake.state = Motor.State.Intake
             if(sorterColor.checkForRecognition()){
                 return false;
-                //intake.state = Motor.Stae.Stop
+                //intake.state = Motor.State.Stop
             }
             else return true;
 
@@ -72,11 +75,11 @@ public class Actions {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             /*if(sorterColor.color == purple){
-                sorterServo.state = Servo.State.PURPLE;
+                sorter.state = Servo.State.PURPLE;
                 return false;
             }
             else if (sorterColor.color == green) {
-                sorterServo.state = Servo.State.GREEN;
+                sorter.state = Servo.State.GREEN;
                 return false;
             }
             else return true;
@@ -89,7 +92,7 @@ public class Actions {
 
     public SequentialAction SortBall = new SequentialAction(Intake, Sort, Reset);
 
-    public Action ShootMotif1 = new Action() {
+    public Action ShootGreen = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //stuff
@@ -97,7 +100,7 @@ public class Actions {
         }
     };
 
-    public Action ShootMotif2 = new Action() {
+    public Action ShootPurple = new Action() {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //stuff
@@ -105,13 +108,11 @@ public class Actions {
         }
     };
 
-    public Action ShootMotif3 = new Action() {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            //stuff
-            return false;
-        }
-    };
+    public SequentialAction ShootMotif1 = new SequentialAction(ShootGreen, ShootPurple, ShootPurple, Reset);
+
+    public SequentialAction ShootMotif2 = new SequentialAction(ShootPurple, ShootGreen, ShootPurple, Reset);
+
+    public SequentialAction ShootMotif3 = new SequentialAction(ShootPurple, ShootPurple, ShootGreen, Reset);
 
     public Action Endgame = new Action() {
         @Override
