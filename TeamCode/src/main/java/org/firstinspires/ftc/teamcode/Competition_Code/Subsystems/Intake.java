@@ -12,7 +12,7 @@ public class Intake {
     public static final double MOTOR_SPEED = 1;
 
     ///  The current state of the intake system
-    public State state;
+    public State state = State.STOPPED;
 
     /// The first intake motor
     DcMotor intake1;
