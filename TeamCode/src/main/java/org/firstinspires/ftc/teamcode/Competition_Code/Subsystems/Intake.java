@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Intake {
 
-    /// This value controls how fast the motors will be spinning.
+    /// This value controls how fast the motors will be spinning
     ///
     /// TODO: Maybe make it so that the motor speed can be changed while the code is running?
     public static final double MOTOR_SPEED = 1;
