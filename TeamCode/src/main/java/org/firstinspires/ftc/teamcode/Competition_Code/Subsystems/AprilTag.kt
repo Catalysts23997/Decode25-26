@@ -112,12 +112,15 @@ class AprilTag(hardwareMap: HardwareMap) : Camera {
         for (detection in currentDetections) {
             if (detection.id == 21) {
                 motif = 1
+                //gpp
             }
             if (detection.id == 22) {
                 motif = 2
+                //pgp
             }
             if (detection.id == 23) {
                 motif = 3
+                //ppg
             }
         }
         return motif

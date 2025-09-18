@@ -37,7 +37,7 @@ class ExampleAuto : LinearOpMode() {
 
         runBlocking(
             ParallelAction(
-                Action {
+                {
                     localizer.update()
                     RunToExactForever(rT)
                     telemetry.addData("hello", ExampleAuto.rT)
@@ -50,18 +50,11 @@ class ExampleAuto : LinearOpMode() {
                 },
                 SequentialAction(
                     robot.example,
-                    AutoPoints.Pos1Y.runToExact,
-                    AutoPoints.GotoSample1Y.runToExact,
-                    AutoPoints.PushtoSample1Y.runToExact,
-                    AutoPoints.GotoSample1Y.runToExact,
-                    AutoPoints.GotoSample2Y.runToExact,
+                    AutoPoints.StartBF.runToExact,
+
                     robot.example,
-                    AutoPoints.PushtoSample2Y.runToExact,
-                    AutoPoints.GotoSample2Y.runToExact,
-                    AutoPoints.GotoSample3Y.runToExact,
-                    AutoPoints.PushtoSample3Y.runToExact,
-                    AutoPoints.GotoSample1Y.runToExact,
-                    AutoPoints.YEnd.runToExact
+
+                    AutoPoints.EndBF.runToExact
 
                 )
             )

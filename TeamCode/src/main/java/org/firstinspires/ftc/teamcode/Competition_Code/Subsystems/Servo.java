@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Servo {
 
     public com.qualcomm.robotcore.hardware.Servo servo;
-    public State state = State.HOLD;
+    public State state;
 
-    public Servo(HardwareMap hardwareMap){
-        servo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "port4");
+    public Servo(HardwareMap hardwareMap, String name){
+        servo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, name);
     }
 
     public void update(){
@@ -23,7 +23,8 @@ public class Servo {
         LAUNCHP(0.0),
         LAUNCHG(0.0),
         HOLDP(0.0),
-        HOLDG(0.0);
+        HOLDG(0.0),
+        LAUNCH(0.0);
         public final double servoPos;
         State(double servoPos) {
             this.servoPos = servoPos;

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.AprilTag;
 import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.ColorSensors;
 import org.firstinspires.ftc.teamcode.Competition_Code.Subsystems.Servo;
 
-public class Actions {
+public class FinalActions {
     AprilTag aprilTag;
     ColorSensors sorterColor;
     Servo sorter;
@@ -39,12 +39,12 @@ public class Actions {
 
 
 
-    public Actions(HardwareMap hardwareMap) {
+    public FinalActions(HardwareMap hardwareMap) {
         aprilTag = new AprilTag(hardwareMap);
         sorterColor = new ColorSensors(hardwareMap);
-        sorter = new Servo(hardwareMap);
-        purpleLaunch = new Servo(hardwareMap);
-        greenLaunch = new Servo(hardwareMap);
+        sorter = new Servo(hardwareMap, "port1");
+        purpleLaunch = new Servo(hardwareMap, "port2");
+        greenLaunch = new Servo(hardwareMap, "port3");
         // launch = new Motor(hardwareMap);
         // intake = new Motor(hardwareMap);
     }
