@@ -20,7 +20,7 @@ import kotlin.math.sin
 class AprilTag(hardwareMap: HardwareMap) : Camera {
 
     enum class State {
-        On, Off, TagDiscovered
+        On, Off
     }
 
     var state = State.Off
@@ -58,7 +58,7 @@ class AprilTag(hardwareMap: HardwareMap) : Camera {
 
         for (detection in currentDetections) {
             if (detection.id == 12 || detection.id == 16) {
-                state = State.TagDiscovered
+                //state = State.TagDiscovered
                 val data = Vector2d(detection.ftcPose.x, detection.ftcPose.y)
                 return cameraVector(fieldDistanceToTag(data))
             }
@@ -89,17 +89,13 @@ class AprilTag(hardwareMap: HardwareMap) : Camera {
     fun update() {
         when (state) {
             State.On -> {
-                searchForTag()
+                getMotif()
             }
 
             State.Off -> {
                 visionPortal.stopStreaming()
             }
 
-            State.TagDiscovered -> {
-//                Localizer.updateWithTag(searchForTag())
-                //todo create a kalman filter if you want
-            }
         }
     }
     fun getMotif(): Int {
@@ -112,7 +108,7 @@ class AprilTag(hardwareMap: HardwareMap) : Camera {
         for (detection in currentDetections) {
             if (detection.id == 21) {
                 motif = 1
-                //gpp
+                        //gpp
             }
             if (detection.id == 22) {
                 motif = 2

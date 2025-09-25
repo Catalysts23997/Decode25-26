@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.Competition_Code.Subsystems
 
+
 import android.util.Log
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.IMU
-
-
-import org.firstinspires.ftc.teamcode.Competition_Code.PinpointLocalizer.Localizer
-
 import org.firstinspires.ftc.teamcode.Competition_Code.Interfaces.SubSystems
 import org.firstinspires.ftc.teamcode.Competition_Code.Utilities.PIDController
 import org.firstinspires.ftc.teamcode.Competition_Code.Utilities.PIDParams
@@ -40,6 +38,13 @@ class DrivetrainNoOdo(hwMap: HardwareMap) : SubSystems {
     val rightFront: DcMotor = hwMap.get(DcMotor::class.java, "backLeft")
     val imu: IMU = hwMap.get(IMU::class.java, "imu")
 
+    val parameters = IMU.Parameters(
+        RevHubOrientationOnRobot(
+            RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+            RevHubOrientationOnRobot.UsbFacingDirection.UP
+        )
+    )
+
 
     override fun update(gamepadInput: ArrayList<Float>) {
 
@@ -69,6 +74,9 @@ class DrivetrainNoOdo(hwMap: HardwareMap) : SubSystems {
         leftFront.direction = DcMotorSimple.Direction.REVERSE
         rightFront.direction = DcMotorSimple.Direction.FORWARD
         rightBack.direction = DcMotorSimple.Direction.FORWARD
+
+
+        imu.initialize(parameters)
 
         instance = this
 
