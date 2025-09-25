@@ -6,8 +6,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor
 import org.firstinspires.ftc.robotcore.external.JavaUtil
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
+import android.graphics.Color
+
 
 class ColorSensors(hwMap: HardwareMap) {
+
+    val hsvValues = FloatArray(3)
 
     private val colorSensor: ColorSensor =
         hwMap.get(ColorSensor::class.java, "colorSensor")
@@ -25,4 +29,31 @@ class ColorSensors(hwMap: HardwareMap) {
 
         return inside
     }
+
+    fun isGreen(): Boolean {
+        Color.RGBToHSV(
+            (colorSensor.red() * 255) / 800,
+            (colorSensor.green() * 255) / 800,
+            (colorSensor.blue() * 255) / 800,
+            hsvValues
+        )
+
+        val hue = hsvValues[0]
+
+        return  hue in 100f..140f
+    }
+
+    fun isPurple(): Boolean {
+        Color.RGBToHSV(
+            (colorSensor.red() * 255) / 800,
+            (colorSensor.green() * 255) / 800,
+            (colorSensor.blue() * 255) / 800,
+            hsvValues
+        )
+
+        val hue = hsvValues[0]
+
+        return hue in 250f..290f
+    }
+
 }
