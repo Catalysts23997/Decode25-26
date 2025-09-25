@@ -54,7 +54,7 @@ class ColorSensors(hwMap: HardwareMap, name: String) {
      * Checks if the color green is in front of the sensor
      */
     fun isGreen(): Boolean {
-        // Convert the RGB output to
+        // Convert the RGB output to HSV
         Color.RGBToHSV(
             (colorSensor.red() * 255) / 800,
             (colorSensor.green() * 255) / 800,
@@ -62,15 +62,18 @@ class ColorSensors(hwMap: HardwareMap, name: String) {
             hsvValues
         )
 
+        // Get the hue value
         val hue = hsvValues[0]
 
-        return  hue in 100f..140f
+        // Check if we are looking at green
+        return hue in 100f..140f
     }
 
     /**
      * Checks if the color purple is in front of the sensor
      */
     fun isPurple(): Boolean {
+        // Convert the RGB output to HSV
         Color.RGBToHSV(
             (colorSensor.red() * 255) / 800,
             (colorSensor.green() * 255) / 800,
@@ -78,8 +81,10 @@ class ColorSensors(hwMap: HardwareMap, name: String) {
             hsvValues
         )
 
+        // Get the hue value
         val hue = hsvValues[0]
 
+        // Check if we are looking at purple
         return hue in 250f..290f
     }
 
