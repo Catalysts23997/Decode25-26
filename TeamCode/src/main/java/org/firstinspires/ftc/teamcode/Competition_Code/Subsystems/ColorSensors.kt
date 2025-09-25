@@ -9,12 +9,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import android.graphics.Color
 
 
-class ColorSensors(hwMap: HardwareMap) {
+class ColorSensors(hwMap: HardwareMap, name: String) {
 
     val hsvValues = FloatArray(3)
 
     private val colorSensor: ColorSensor =
-        hwMap.get(ColorSensor::class.java, "colorSensor")
+        hwMap.get(ColorSensor::class.java, name)
 
     fun checkForRecognition(): Boolean {
 
